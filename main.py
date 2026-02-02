@@ -69,8 +69,6 @@ class Client(commands.Bot):
             await message.channel.send('https://tenor.com/view/yes-hi-smells-good-done-cooking-stinky-gif-13460406')
         if 'degloved' in message.content.lower():
             await message.channel.send('https://media.discordapp.net/attachments/1421006466445348904/1449692117638058096/IMG_9643.jpeg?ex=693fd27e&is=693e80fe&hm=ec9aedb412f7517351f59c19b84eb5cc5ef50f0de338724ecf66e9217c858dde&=&format=webp&width=1020&height=930')
-        if 'tôi yêu depchai' in message.content.lower():
-            await message.channel.send('https://tenor.com/view/patrick-bateman-sigma-joker-lightning-god-patrick-bateman-sigma-edit-gif-11768805784532291762')
         if 'ai ghét depchai' in message.content.lower():
             await message.channel.send('https://media.discordapp.net/attachments/1374705648796827671/1454325901214093312/IMG_4474.png?ex=6950ae0a&is=694f5c8a&hm=0b18c041326f4d85758dd6d9d00a89db06b079b9dc53651656327b883022cb5e&=&format=webp&quality=lossless&width=1526&height=800')
         if 'wish i knew' in message.content.lower():
@@ -96,8 +94,8 @@ intents.members = True
 intents.guilds = True
 client = Client()
 GUILD_ID = [
-    discord.Object(id=1374705648234659972),
-    discord.Object(id=1380776258014543996)
+    discord.Object(id=1374705648234659972), #depchai
+    discord.Object(id=1380776258014543996) #drugcord
 ]
 
 
@@ -111,7 +109,7 @@ allowed = discord.AllowedMentions(
 
 # function lọc từ cấm
 tu_cam = ["nigga", "nigger", "penis", "hitler", "horny", "dildo", "pussy", "fuck", "dick", "bitch", "nude", "fatass", "porn", "boob", "cunt", "cumming", "asshole", "sperm", "cocaine", "cumshot", "nứng", "chịch", "buồi", "điếm", "cặc", "lồn", "parky", "namki", "trungki", 'tinh dịch', 'ấu dâm', 'hiếp dâm', 'thủ dâm', 'chó đẻ', 'ma túy', 'thuốc lắc', 'bắc kì', 'nam kì', 'trung kì', 'tinh trùng', 'bú vú', 'bú cu', 'cần sa']
-tu_cam_rieng = ['đĩ', 'đỉ', 'đụ', 'dái', 'địt', 'iồn', 'anal', 'cum', 'ass', 'sex', 'sexual', 'cock', 'rape', 'pedo', 'pedophiles']
+tu_cam_rieng = ['đĩ', 'đỉ', 'đụ', 'dái', 'địt', 'iồn', 'anal', 'cum', 'ass', 'sex', 'sexual', 'cock', 'rape']
 
 def badwords(word: str) -> bool:
     text = word.lower()
@@ -289,6 +287,18 @@ async def menu(interaction: discord.Interaction):
 
 
 # slash command thực sự dùng đc😂😂😂
+@client.tree.command(name="about", description="Thông tin của bot", guilds=GUILD_ID)
+async def uhh(interaction: discord.Interaction):
+    embed = discord.Embed(title="Depchai Bot", description="T la Depchai", color=discord.Color.yellow())
+    embed.set_thumbnail(url="https://media.discordapp.net/attachments/1054347353898897428/1462415303756742811/image.png?ex=698139a2&is=697fe822&hm=b4ae7abb22f9550af5c440452cc1226f4707ba8747c8bddab8e5cafafe1bb08d&=&format=webp&quality=lossless&width=438&height=438")
+    embed.add_field(name="Developer", value="<@1011257705031274536> (Owner + lead developer\n<@1372581695328620594>)", inline=False)
+    embed.add_field(name="Giới thiệu", value="Bot Discord được tạo bởi Depchai và được giúp từ Random Person\nBot chủ yếu để vui, giải trí", inline=False)
+    embed.add_field(name="Web scrape", value="Web mà bot đã scrape thông tin:\nhttps://tiktok.com\nhttps://gdbrowser.com\nhttps://dictionary.cambridge.org\nhttp://tratu.soha.vn/dict/vn_vn\nhttps://www.nytimes.com\nhttps://flagcdn.com\n", inline=False)    
+    embed.set_author(name="Depchai bot")
+    await interaction.response.send_message(embed=embed)
+
+
+
 @client.tree.command(name="free_fire_name_generator", description="Tạo tên fi fai", guilds=GUILD_ID)
 @app_commands.describe(chudau="Chọn chữ đầu",chucuoi="Chọn chữ cuối")
 @app_commands.choices(
@@ -480,38 +490,6 @@ async def death(interaction: discord.Interaction, ngay_sinh: int, thang_sinh: in
     ly_do = ['tuổi già', 'tai nạn', 'ung thư', 'bệnh tật', 'chết đói', 'chết đuối', 'bị ám sát', 'bị đầu độc', 'bị giết', '44']
 
     await interaction.response.send_message(f"M sẽ chết vào: {ngay_chet}/{thang_chet}/{nam_sinh + nam_chet} (<t:{unix_time}:R>) ☠️☠️\nVới lý do: {random.choice(ly_do)} <:thosewhodontknow:1393572894558126121>\nHưởng dương {nam_chet} tuổi🍚🍚🍚")
-
-
-
-@client.tree.command(name="bio_generator", description="Tạo một bio mà sẽ del ai dùng", guilds=GUILD_ID)
-@app_commands.describe(acc="Acc chính hay phụ", doi="Ai hỏi thì m trả lời như nào", vansu="Vạn sự như nào", ghe="Có gh* chưa")
-@app_commands.choices(
-    acc=[
-       app_commands.Choice(name="🔰Acc chính chủ🔰", value="chinh"),
-       app_commands.Choice(name="🔰Acc clone🔰", value="clone")], 
-    doi=[
-       app_commands.Choice(name="Đối sao đáp vậy👌", value="doidap"),
-       app_commands.Choice(name="Hỏi đâu mà đáp👌", value="aihoi")],
-    vansu=[
-       app_commands.Choice(name="🪷Vạn sự tùy duyên🪷", value="duyen"),
-       app_commands.Choice(name="☠️Vạn sự tùy TAO☠️", value="tao"),
-       app_commands.Choice(name="🪷Vạn sự như chó🪷", value="cho")],
-    ghe=[
-       app_commands.Choice(name="💌Chưa có chủ💌", value="chua"),
-       app_commands.Choice(name="💌Đã có chủ💌", value="roi")
-    ])
-async def bio(interaction: discord.Interaction, acc: app_commands.Choice[str], doi: app_commands.Choice[str], sothich: str, vansu: app_commands.Choice[str], ghe: app_commands.Choice[str]):
-    if badwords(sothich):
-        await interaction.followup.send('nuh uh<:ruachemieng:1440560108676321320>', ephemeral=True)
-        return
-    await interaction.response.send_message(f"{acc.name}\n🍚👕🌾💵\n❤️Mê {sothich}❤️\n{vansu.name}\n{ghe.name}\n🤜Đến là đón, đụng là chạm🤛", allowed_mentions=allowed)
-# 🔰Acc chính chủ🔰
-# 🍚👕🌾💵
-# Đối sao đáp vậy👌
-# ❤️Mê xe độ❤️
-# 🪷Vạn sự tùy duyên🪷
-# 💌Chưa có chủ💌
-# 🤜Đến là đón, đụng là chạm🤛
 
 
 
