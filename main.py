@@ -24,6 +24,8 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 hi = os.getenv('hjhj').split(",")
 print("TOKEN loaded:", bool(TOKEN))
 
+auto_react = False
+
 class Client(commands.Bot):
     def __init__(self):
         super().__init__(command_prefix=["𒈓", "$"], intents=intents)
@@ -79,12 +81,16 @@ class Client(commands.Bot):
         if 'i hate epstein' in message.content.lower():
             embed = discord.Embed(title="🔄 Translating 🔄", description="I didn't get invited to his island.", color=discord.Color.blue())
             await message.channel.send(embed=embed)
-            
+        
         if message.guild.id == 1374705648234659972:
             for i in hi:
                 if re.search(rf"\b{re.escape(i)}\b", message.content.lower()):
                     await message.delete(delay=None)
                     break
+        
+        if auto_react:
+            if message.channel.id == 1374705648796827671:
+                await message.add_reaction('<a:ruanhay:1387395274518958181>')
         await self.process_commands(message)
 
 #cài đặt gì đấy idk
@@ -393,7 +399,7 @@ class CounterButton(discord.ui.View):
             await interaction.response.send_message(f"Không được bấm 2 lần liên tục <a:sussybaka:1422928147577307166>", ephemeral=True)
             return
         self.value += 1
-        if self.limit is not None and self.value >= self.limit:
+        if self.limit is not None and self.value > self.limit:
             button.disabled = True
             button.style = discord.ButtonStyle.red
             await interaction.response.edit_message(content=f"Đã đạt giới hạn {self.limit} lượt bấm🎉, **người chiến thắng là: ** <@{interaction.user.id}>", view=self)
@@ -597,7 +603,7 @@ def to_tieqviet(text: str) -> str:
             i += 1
     return result
 
-@client.tree.command(name="tieq_viet", description="Chuyển đổi Tiếng Việt truyền thống sang Tiếq Việt", guilds=GUILD_ID)
+@client.tree.command(name="tieq_viet", description="Chuyển đổi Tiếng Việt truyền thống sang Tiếq Việt")
 async def tieqviet(interaction: discord.Interaction, text: str):
     if badwords(text):
         await interaction.response.send_message('nuh uh<:ruachemieng:1440560108676321320>', ephemeral=True)
@@ -788,7 +794,7 @@ async def wordle(interaction: discord.Interaction):
                 await interaction.channel.send(f'Okiiiii😁😁\nĐáp án là: {ans}')
                 break
             else:
-                await interaction.channel.send('Không đủ 5 kí tự <:packgod:1384036888402333726>')
+                await interaction.channel.send('Không đủ 5 kí tự <:dumbahh:1391405354687926273>')
                 continue
             
         response = ['⬜'] * 5
@@ -867,14 +873,14 @@ async def flag(interaction: discord.Interaction):
             await interaction.channel.send(f'Okiiiii😁😁 đáp án là: {ans}')
             return
         else:
-            await interaction.channel.send(f'Sai <:cuoiteghe:1454649885495263416><:cuoiteghe:1454649885495263416><:cuoiteghe:1454649885495263416> đáp án là: {ans}')
+            await interaction.channel.send(f'Sai <:cuoiteghe:1478012484202790913><:cuoiteghe:1478012484202790913><:cuoiteghe:1478012484202790913> đáp án là: {ans}')
             wrong += 1
 
     await interaction.channel.send(f'M đã đoán đúng {correct} lần và sai {wrong} lần <:votay:1421701691316895854><:votay:1421701691316895854><:votay:1421701691316895854>')
 
 
 
-@client.tree.command(name="tiktok_mp4", description="Gửi video Tiktok dưới dạng video", guilds=GUILD_ID)
+@client.tree.command(name="tiktok_mp4", description="Gửi link Tiktok dưới dạng video", guilds=GUILD_ID)
 async def tictac_mp4(interaction: discord.Interaction, link: str):
     await interaction.response.defer()
 
@@ -920,6 +926,24 @@ async def feedback(interaction: discord.Interaction, message: str):
         await interaction.followup.send("Không thể gửi tin nhắn cho Depchai😳😳", ephemeral=True)
 
 
+
+@client.tree.command(name='ruareact', description='React emoji rùa lên mọi emoji trong general', guilds=GUILD_ID)
+@app_commands.describe(onoff='tắt hay mở')
+@app_commands.choices(
+    onoff= [
+        app_commands.Choice(name='Tắt', value=False),
+        app_commands.Choice(name='Mở', value=True)
+    ]
+)
+async def feedback(interaction: discord.Interaction, onoff: app_commands.Choice[bool]):
+    if interaction.user.id != 1011257705031274536:
+        await interaction.response.send_message('chỉ depchai mới dùng đc thôi <a:imatheclub:1479629376592281620><a:imatheclub:1479629376592281620>')
+        return
+    if onoff.value:
+        auto_react = True
+    else:
+        auto_react = False
+    await interaction.response.send_message('xong r')
 
 import time
 print("🕒 Đang chờ 10 giây trước khi khởi động bot...")
