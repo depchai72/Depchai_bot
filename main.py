@@ -38,9 +38,10 @@ class Client(commands.Bot):
                 gui=discord.Object(id=i)
                 synced = await self.tree.sync(guild=gui)
                 print(f'Đã động bộ {len(synced)} lệnh vào guild {i}')
-
         except Exception as e:
             print(f'Lỗi khi đồng bộ lệnh: {e}')
+
+        await client.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name="Grand Theft Auto VI"))
 
     async def on_message(self, message): # autoresponses
         if message.author == self.user:
@@ -935,7 +936,7 @@ async def feedback(interaction: discord.Interaction, message: str):
         app_commands.Choice(name='Mở', value=True)
     ]
 )
-async def feedback(interaction: discord.Interaction, onoff: app_commands.Choice[bool]):
+async def ruareact(interaction: discord.Interaction, onoff: app_commands.Choice[bool]):
     if interaction.user.id != 1011257705031274536:
         await interaction.response.send_message('chỉ depchai mới dùng đc thôi <a:imatheclub:1479629376592281620><a:imatheclub:1479629376592281620>')
         return
