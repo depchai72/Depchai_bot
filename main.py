@@ -932,15 +932,15 @@ async def feedback(interaction: discord.Interaction, message: str):
 @app_commands.describe(onoff='tắt hay mở')
 @app_commands.choices(
     onoff= [
-        app_commands.Choice(name='Tắt', value=False),
-        app_commands.Choice(name='Mở', value=True)
+        app_commands.Choice(name='Tắt', value=0),
+        app_commands.Choice(name='Mở', value=1)
     ]
 )
-async def ruareact(interaction: discord.Interaction, onoff: app_commands.Choice[bool]):
+async def ruareact(interaction: discord.Interaction, onoff: app_commands.Choice[int]):
     if interaction.user.id != 1011257705031274536:
         await interaction.response.send_message('chỉ depchai mới dùng đc thôi <a:imatheclub:1479629376592281620><a:imatheclub:1479629376592281620>')
         return
-    if onoff.value:
+    if onoff.value == 1:
         auto_react = True
     else:
         auto_react = False
