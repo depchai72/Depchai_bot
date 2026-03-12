@@ -296,12 +296,12 @@ async def menu(interaction: discord.Interaction):
 # slash command thực sự dùng đc😂😂😂
 @client.tree.command(name="about", description="Thông tin của bot", guilds=GUILD_ID)
 async def uhh(interaction: discord.Interaction):
-    embed = discord.Embed(title="Depchai Bot", description="T la Depchai", color=discord.Color.yellow())
+    embed = discord.Embed(title="Depchai Bot", color=discord.Color.yellow())
     embed.set_thumbnail(url="https://media.discordapp.net/attachments/1054347353898897428/1462415303756742811/image.png?ex=698139a2&is=697fe822&hm=b4ae7abb22f9550af5c440452cc1226f4707ba8747c8bddab8e5cafafe1bb08d&=&format=webp&quality=lossless&width=438&height=438")
-    embed.add_field(name="Developer", value="<@1011257705031274536> (Owner + lead developer\n<@1372581695328620594>)", inline=False)
-    embed.add_field(name="Giới thiệu", value="Bot Discord được tạo bởi Depchai và được giúp từ Random Person\nBot chủ yếu để vui, giải trí", inline=False)
+    embed.add_field(name="Developer", value="<@1011257705031274536> (Owner + lead developer)\n<@1372581695328620594>", inline=False)
+    embed.add_field(name="Giới thiệu", value="Bot Discord được tạo bởi Depchai và được giúp từ Random Person\nBot chủ yếu để vui, giải trí xàm", inline=False)
     embed.add_field(name="Web scrape", value="Web mà bot đã scrape thông tin:\nhttps://tiktok.com\nhttps://gdbrowser.com\nhttps://dictionary.cambridge.org\nhttp://tratu.soha.vn/dict/vn_vn\nhttps://www.nytimes.com\nhttps://flagcdn.com\n", inline=False)    
-    embed.set_author(name="Depchai bot")
+    embed.set_footer(text='Depchai')
     await interaction.response.send_message(embed=embed)
 
 
