@@ -83,14 +83,16 @@ class Client(commands.Bot):
             embed = discord.Embed(title="🔄 Translating 🔄", description="I didn't get invited to his island.", color=discord.Color.blue())
             await message.channel.send(embed=embed)
         
-        if message.guild.id == 1374705648234659972:
+        serverDepchai = 1374705648234659972
+        if message.guild.id == serverDepchai:
             for i in hi:
                 if re.search(rf"\b{re.escape(i)}\b", message.content.lower()):
                     await message.delete(delay=None)
                     break
         
+        general = 1374705648796827671
         if auto_react:
-            if message.channel.id == 1374705648796827671:
+            if message.channel.id == general:
                 await message.add_reaction('<a:ruanhay:1387395274518958181>')
         await self.process_commands(message)
 
@@ -937,7 +939,7 @@ async def feedback(interaction: discord.Interaction, message: str):
     ]
 )
 async def ruareact(interaction: discord.Interaction, onoff: app_commands.Choice[int]):
-    if interaction.user.id != 1011257705031274536:
+    if interaction.user.id != DEPCHAI:
         await interaction.response.send_message('chỉ depchai mới dùng đc thôi <a:imatheclub:1479629376592281620><a:imatheclub:1479629376592281620>')
         return
     if onoff.value == 1:
