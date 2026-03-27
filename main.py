@@ -24,8 +24,6 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 hi = os.getenv('hjhj').split(",")
 print("TOKEN loaded:", bool(TOKEN))
 
-auto_react = False
-
 class Client(commands.Bot):
     def __init__(self):
         super().__init__(command_prefix=["𒈓", "$"], intents=intents)
@@ -78,7 +76,9 @@ class Client(commands.Bot):
             await message.channel.send("https://tenor.com/view/scp-wish-i-knew-scp-wish-i-knew-gif-3623425954504276893")
         if message.content.lower().startswith('thằng nào đây'):
             await message.channel.send("https://media.discordapp.net/attachments/1374705648796827671/1455067797787775178/Screenshot_20251217_182230_TikTok.jpg?ex=695360fc&is=69520f7c&hm=0049013fa84da10beddffdbb13f14bcb9eaee825b610203ef1777c280a5b3b59&=&format=webp&width=1349&height=750")
-        
+        if message.content.lower() == '9999':
+            await message.channel.send("https://media.discordapp.net/attachments/1374705648796827671/1487066031368306860/snaptik_7620449832343309588_2_v2.jpg?ex=69c7c9aa&is=69c6782a&hm=55ce6101b78244dcdf4e295e5bcc46320d6af157c0720c64cc401555249386a5&=&format=webp&width=851&height=930")
+
         if 'i hate epstein' in message.content.lower():
             embed = discord.Embed(title="🔄 Translating 🔄", description="I didn't get invited to his island.", color=discord.Color.blue())
             await message.channel.send(embed=embed)
@@ -90,10 +90,6 @@ class Client(commands.Bot):
                     await message.delete(delay=None)
                     break
         
-        general = 1374705648796827671
-        if auto_react:
-            if message.channel.id == general:
-                await message.add_reaction('<a:ruanhay:1387395274518958181>')
         await self.process_commands(message)
 
 #cài đặt gì đấy idk
@@ -929,24 +925,6 @@ async def feedback(interaction: discord.Interaction, message: str):
         await interaction.followup.send("Không thể gửi tin nhắn cho Depchai😳😳", ephemeral=True)
 
 
-
-@client.tree.command(name='ruareact', description='React emoji rùa lên mọi emoji trong general', guilds=GUILD_ID)
-@app_commands.describe(onoff='tắt hay mở')
-@app_commands.choices(
-    onoff= [
-        app_commands.Choice(name='Tắt', value=0),
-        app_commands.Choice(name='Mở', value=1)
-    ]
-)
-async def ruareact(interaction: discord.Interaction, onoff: app_commands.Choice[int]):
-    if interaction.user.id != DEPCHAI:
-        await interaction.response.send_message('chỉ depchai mới dùng đc thôi <a:imatheclub:1479629376592281620><a:imatheclub:1479629376592281620>')
-        return
-    if onoff.value == 1:
-        auto_react = True
-    else:
-        auto_react = False
-    await interaction.response.send_message('xong r')
 
 import time
 print("🕒 Đang chờ 10 giây trước khi khởi động bot...")
