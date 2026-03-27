@@ -906,23 +906,24 @@ async def tictac_mp4(interaction: discord.Interaction, link: str):
 
 
 DEPCHAI = 1011257705031274536
+RANDOM_PERSON = 1372581695328620594
 @client.tree.command(name='feedback', description="Gửi góp ý đến depchai", guilds=GUILD_ID)
 async def feedback(interaction: discord.Interaction, message: str):
     await interaction.response.send_message("<a:acn_tickden:1413824083413696652> Gửi góp ý thành công")
-
-    owner = await client.fetch_user(DEPCHAI)
-
     embed = discord.Embed(
         title="📩 Góp ý mới",
         description=message,
         color=discord.Color.green()
     )
-    embed.add_field(name="Người gửi", value=f"@{interaction.user}")
+        embed.add_field(name="Người gửi", value=f"@{interaction.user}")
+    user_ids = [DEPCHAI, RANDOM_PERSON]
+    for user in user_ids:
+        owner = await client.fetch_user(user)
     
-    try:
-        await owner.send(embed=embed)
-    except:
-        await interaction.followup.send("Không thể gửi tin nhắn cho Depchai😳😳", ephemeral=True)
+        try:
+            await owner.send(embed=embed)
+        except:
+            await interaction.followup.send("Không thể gửi tin nhắn cho Depchai😳😳", ephemeral=True)
 
 
 
@@ -934,4 +935,5 @@ try:
     client.run(TOKEN)
     print("mẹ ơi con làm được rồi🥹🥹")
 except Exception as e:
+
     print("Lỗi khi chạy bot:", e)
