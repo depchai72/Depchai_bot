@@ -31,7 +31,7 @@ class Client(commands.Bot):
     async def on_ready(self):
         print(f'Hello ae t là {self.user}!')
         try:
-            guilds = [1374705648234659972, 1380776258014543996] #
+            guilds = [1374705648234659972, 1380776258014543996] #serverDepchai = 1374705648234659972 drugcord = 1380776258014543996
             for i in guilds:
                 gui=discord.Object(id=i)
                 synced = await self.tree.sync(guild=gui)
@@ -82,14 +82,7 @@ class Client(commands.Bot):
         if 'i hate epstein' in message.content.lower():
             embed = discord.Embed(title="🔄 Translating 🔄", description="I didn't get invited to his island.", color=discord.Color.blue())
             await message.channel.send(embed=embed)
-        
-        serverDepchai = 1374705648234659972
-        if message.guild.id == serverDepchai:
-            for i in hi:
-                if re.search(rf"\b{re.escape(i)}\b", message.content.lower()):
-                    await message.delete(delay=None)
-                    break
-        
+                
         await self.process_commands(message)
 
 #cài đặt gì đấy idk
@@ -616,12 +609,12 @@ def level(id: int):
     level = requests.get(f"https://gdbrowser.com/{id}")
     soup = BeautifulSoup(level.text, "html.parser")
     name = soup.find("span", attrs={"class":"pre"})
-    author1 = soup.find("a", attrs={"class":"linkButton"})
+    creator = soup.find("a", attrs={"class":"linkButton"})
     chiso = soup.find_all("h1", attrs={"class":"valign inline smaller spaced"})
     img = soup.find("img", {"class": "help"}) 
     desc = soup.find("p", attrs={"class":"pre"})
     songname = soup.find('h1', attrs={'class':'pre slightlySmaller'})
-    songauthor1 = soup.find('h2', attrs={'class':'pre smaller'})
+    songauthor = soup.find('h2', attrs={'class':'pre smaller'})
     top = soup.find('h1', attrs={'class': 'smaller inline demonList'})
 
     values = []
@@ -633,12 +626,9 @@ def level(id: int):
     likes = values[1]
     length = values[2]
     icon = urljoin("https://gdbrowser.com/", img["src"])
-    author = author1.text.strip().replace("By ","")
-    songauthor = songauthor1.text.strip().replace("By: ", "")
-    if songauthor in songname.text:
-        song = songname.text.strip()
-    else:
-        song = f'{songname.text.strip()} - {songauthor}'
+    creator_strip = creator.text.strip().replace("By ","")
+    songauthor_strip = songauthor.text.strip().replace("By: ", "")
+    song = {songname.text.strip()} + ' by ' + {songauthor_strip}
 
     diff = img["title"]
     if 'Extreme Demon' in diff or 'Insane Demon' in diff or 'Hard Demon' in diff:
@@ -660,10 +650,7 @@ def level(id: int):
     elif 'Unrated' in diff:
         color=discord.Color.light_grey()
 
-    if not '[[DEMONLIST]]' in top.text:
-        embed = discord.Embed(title=name.text.strip(), description=f"🛠️ Tác giả: {author}\n⤵️ Downloads: {downloads}\n👍 Likes: {likes}\n🕓 Độ dài: {length}\n🏆 Hạng: {top.text}\n🎵 Nhạc: {song}", color=color)
-    else:
-        embed = discord.Embed(title=name.text.strip(), description=f"🛠️ Tác giả: {author}\n⤵️ Downloads: {downloads}\n👍 Likes: {likes}\n🕓 Độ dài: {length}\n🎵 Nhạc: {song}", color=color)
+    embed = discord.Embed(title=name.text.strip(), description=f"🛠️ Tác giả: {creator_strip}\n⤵️ Downloads: {downloads}\n👍 Likes: {likes}\n🕓 Độ dài: {length}\n🎵 Nhạc: {song}", color=color)
     embed.set_thumbnail(url=icon)
     embed.add_field(name="Mô tả", value=desc.text.strip(), inline=False)
     embed.set_image(url=f'https://levelthumbs.prevter.me/thumbnail/{id}')
