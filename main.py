@@ -286,7 +286,7 @@ async def menu(interaction: discord.Interaction):
 
 # slash command thực sự dùng đc😂😂😂
 @client.tree.command(name="about", description="Thông tin của bot", guilds=GUILD_ID)
-async def uhh(interaction: discord.Interaction):
+async def about(interaction: discord.Interaction):
     embed = discord.Embed(title="Depchai Bot", color=discord.Color.yellow())
     embed.set_thumbnail(url="https://media.discordapp.net/attachments/1054347353898897428/1462415303756742811/image.png?ex=698139a2&is=697fe822&hm=b4ae7abb22f9550af5c440452cc1226f4707ba8747c8bddab8e5cafafe1bb08d&=&format=webp&quality=lossless&width=438&height=438")
     embed.add_field(name="Developer", value="<@1011257705031274536> (Owner + lead developer)\n<@1372581695328620594>", inline=False)
@@ -539,7 +539,6 @@ teencode_map = {
     "ư": "u", "ứ": "u", "ừ": "u", "ử": "u", "ữ": "u", "ự": "u",
     "v": "√", "x": "><", "y": "7"
 }
-
 # Hàm chuyển đổi sang teencode
 def to_teencode(text: str) -> str:
     result = ""
@@ -619,41 +618,40 @@ def level(id: int):
 
     values = []
     for tag in chiso:
-        text = tag.text.strip()
+        text = tag.text
         values.append(text)
 
     downloads = values[0]
     likes = values[1]
     length = values[2]
     icon = urljoin("https://gdbrowser.com/", img["src"])
-    creator_strip = creator.text.strip().replace("By ","")
-    songauthor_strip = songauthor.text.strip().replace("By: ", "")
-    song = {songname.text.strip()} + ' by ' + {songauthor_strip}
+    creator_strip = creator.text.replace("By ","")
+    song = f'{songname.text} {songauthor.text}'
 
     diff = img["title"]
-    if 'Extreme Demon' in diff or 'Insane Demon' in diff or 'Hard Demon' in diff:
+    if 'Extreme Demon' == diff or 'Insane Demon' == diff or 'Hard Demon' == diff:
         color=discord.Color.dark_red()
-    elif 'Medium Demon' in diff:
+    elif 'Medium Demon' == diff:
         color=discord.Color.purple()
-    elif 'Easy Demon' in diff:
+    elif 'Easy Demon' == diff:
         color=discord.Color.dark_purple()
-    elif 'Insane' in diff:
+    elif 'Insane' == diff:
         color=discord.Color.pink()
-    elif 'Harder' in diff:
+    elif 'Harder' == diff:
         color=discord.Color.red()
-    elif 'Hard' in diff:
+    elif 'Hard' == diff:
         color=discord.Color.gold()
-    elif 'Normal' in diff:
+    elif 'Normal' == diff:
         color=discord.Color.green()
-    elif 'Easy' in diff:
+    elif 'Easy' == diff:
         color=discord.Color.blue()
-    elif 'Unrated' in diff:
+    elif 'Unrated' == diff:
         color=discord.Color.light_grey()
 
     embed = discord.Embed(title=name.text.strip(), description=f"🛠️ Tác giả: {creator_strip}\n⤵️ Downloads: {downloads}\n👍 Likes: {likes}\n🕓 Độ dài: {length}\n🎵 Nhạc: {song}", color=color)
     embed.set_thumbnail(url=icon)
     embed.add_field(name="Mô tả", value=desc.text.strip(), inline=False)
-    embed.set_image(url=f'https://levelthumbs.prevter.me/thumbnail/{id}')
+    embed.set_image(url='https://levelthumbs.prevter.me/thumbnail/' + str(id))
     embed.set_footer(text = f"ID: {id}")
     return embed
 
