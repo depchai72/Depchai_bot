@@ -31,7 +31,7 @@ class Client(commands.Bot):
     async def on_ready(self):
         print(f'Hello ae t là {self.user}!')
         try:
-            guilds = [1374705648234659972, 1380776258014543996] #serverDepchai = 1374705648234659972 drugcord = 1380776258014543996
+            guilds = [1374705648234659972, 1380776258014543996, 1408388496577658890]
             for i in guilds:
                 gui=discord.Object(id=i)
                 synced = await self.tree.sync(guild=gui)
@@ -67,21 +67,12 @@ class Client(commands.Bot):
             await message.add_reaction('<a:a_tickvang:1422566122305097830>')
 
         if message.content.lower() == ('ai hỏi'):
-            await message.channel.send('https://tenor.com/view/yes-hi-smells-good-done-cooking-stinky-gif-13460406')
-        if 'degloved' in message.content.lower():
-            await message.channel.send('https://media.discordapp.net/attachments/1421006466445348904/1449692117638058096/IMG_9643.jpeg?ex=693fd27e&is=693e80fe&hm=ec9aedb412f7517351f59c19b84eb5cc5ef50f0de338724ecf66e9217c858dde&=&format=webp&width=1020&height=930')
+            await message.channel.send('https://media.discordapp.net/attachments/1374705648796827671/1518471847723663390/images_55.jpg?ex=6a3a0a9c&is=6a38b91c&hm=50263b097aaafad6365d67e556152c4840a8cb6fca7dca74e6c1c98d9c74490a&=&format=webp&width=745&height=419')
         if 'ai ghét depchai' in message.content.lower():
             await message.channel.send('https://media.discordapp.net/attachments/1374705648796827671/1454325901214093312/IMG_4474.png?ex=6950ae0a&is=694f5c8a&hm=0b18c041326f4d85758dd6d9d00a89db06b079b9dc53651656327b883022cb5e&=&format=webp&quality=lossless&width=1526&height=800')
-        if 'wish i knew' in message.content.lower():
-            await message.channel.send("https://tenor.com/view/scp-wish-i-knew-scp-wish-i-knew-gif-3623425954504276893")
         if message.content.lower().startswith('thằng nào đây'):
             await message.channel.send("https://media.discordapp.net/attachments/1374705648796827671/1455067797787775178/Screenshot_20251217_182230_TikTok.jpg?ex=695360fc&is=69520f7c&hm=0049013fa84da10beddffdbb13f14bcb9eaee825b610203ef1777c280a5b3b59&=&format=webp&width=1349&height=750")
-        if message.content.lower() == '9999':
-            await message.channel.send("https://media.discordapp.net/attachments/1374705648796827671/1487066031368306860/snaptik_7620449832343309588_2_v2.jpg?ex=69c7c9aa&is=69c6782a&hm=55ce6101b78244dcdf4e295e5bcc46320d6af157c0720c64cc401555249386a5&=&format=webp&width=851&height=930")
-
-        if 'i hate epstein' in message.content.lower():
-            embed = discord.Embed(title="🔄 Translating 🔄", description="I didn't get invited to his island.", color=discord.Color.blue())
-            await message.channel.send(embed=embed)
+        
                 
         await self.process_commands(message)
 
@@ -93,7 +84,8 @@ intents.guilds = True
 client = Client()
 GUILD_ID = [
     discord.Object(id=1374705648234659972), #depchai
-    discord.Object(id=1380776258014543996) #drugcord
+    discord.Object(id=1380776258014543996), #drugcord
+    discord.Object(id=1408388496577658890)
 ]
 
 
@@ -614,7 +606,9 @@ def level(id: int):
     desc = soup.find("p", attrs={"class":"pre"})
     songname = soup.find('h1', attrs={'class':'pre slightlySmaller'})
     songauthor = soup.find('h2', attrs={'class':'pre smaller'})
-    top = soup.find('h1', attrs={'class': 'smaller inline demonList'})
+
+    if soup.find('h1', attrs={'class': 'smaller inline demonList'}):
+        top = soup.find('h1', attrs={'class': 'smaller inline demonList'})
 
     values = []
     for tag in chiso:
@@ -648,7 +642,10 @@ def level(id: int):
     elif 'Unrated' == diff:
         color=discord.Color.light_grey()
 
-    embed = discord.Embed(title=name.text.strip(), description=f"🛠️ Tác giả: {creator_strip}\n⤵️ Downloads: {downloads}\n👍 Likes: {likes}\n🕓 Độ dài: {length}\n🎵 Nhạc: {song}", color=color)
+    if top:
+        embed = discord.Embed(title=name.text.strip(), description=f"🛠️ Tác giả: {creator_strip}\n⤵️ Downloads: {downloads}\n👍 Likes: {likes}\n🕓 Độ dài: {length}\n🎵 Nhạc: {song}\n🏆 Hạng: {top.text}", color=color)
+    else:
+        embed = discord.Embed(title=name.text.strip(), description=f"🛠️ Tác giả: {creator_strip}\n⤵️ Downloads: {downloads}\n👍 Likes: {likes}\n🕓 Độ dài: {length}\n🎵 Nhạc: {song}", color=color)
     embed.set_thumbnail(url=icon)
     embed.add_field(name="Mô tả", value=desc.text.strip(), inline=False)
     embed.set_image(url='https://levelthumbs.prevter.me/thumbnail/' + str(id))
