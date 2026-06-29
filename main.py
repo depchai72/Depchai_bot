@@ -24,6 +24,7 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 hi = os.getenv('hjhj').split(",")
 print("TOKEN loaded:", bool(TOKEN))
 
+
 class Client(commands.Bot):
     def __init__(self):
         super().__init__(command_prefix=["𒈓", "$"], intents=intents)
@@ -76,16 +77,26 @@ class Client(commands.Bot):
                 
         await self.process_commands(message)
 
+
+    async def on_member_join(self, member: discord.Member):
+        welcome = self.get_channel(1379248831366955208)
+        
+        if welcome is not None:
+            await welcome.send(f"{member.mention} Welcome to Depchai brother")
+            await welcome.send("https://tenor.com/view/welcome-to-bp-brother-gif-9417284892837119499")
+
+
 #cài đặt gì đấy idk
 intents = discord.Intents.default()
+client = Client()
 intents.message_content = True
 intents.members = True
 intents.guilds = True
-client = Client()
+
 GUILD_ID = [
     discord.Object(id=1374705648234659972), #depchai
     discord.Object(id=1380776258014543996), #drugcord
-    discord.Object(id=1408388496577658890)
+    discord.Object(id=1408388496577658890) #gurtogas
 ]
 
 
