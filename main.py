@@ -684,8 +684,13 @@ class nextlvl(discord.ui.View):
         super().__init__()
         self.thutu = thutu
         self.query = query
+        self.user = 'h'
     @discord.ui.button(label="", style=discord.ButtonStyle.blurple, emoji='⬅️')
     async def back(self, interaction: discord.Interaction, button: discord.ui.Button):
+        if interaction.user.display_name != self.user and self.user != 'h':
+            await interaction.followup.send('Del phải nút của m🤫🤫', ephemeral = True)
+            return
+        
         await interaction.response.defer()
         self.thutu -= 1
         if self.thutu < 0:
@@ -694,8 +699,14 @@ class nextlvl(discord.ui.View):
             return
         h = searchlvl(self.query, self.thutu)
         await interaction.message.edit(embed=level(h), view = self)
+        self.user = interaction.user.display_name
+
     @discord.ui.button(label="", style=discord.ButtonStyle.blurple, emoji='➡️')
     async def next(self, interaction: discord.Interaction, button: discord.ui.Button):
+        if interaction.user.display_name != self.user and self.user != 'h':
+            await interaction.followup.send('Del phải nút của m🤫🤫', ephemeral = True)
+            return
+
         await interaction.response.defer()
         self.thutu += 1
         h = searchlvl(self.query, self.thutu)
@@ -704,6 +715,7 @@ class nextlvl(discord.ui.View):
             self.thutu -= 1
             return
         await interaction.message.edit(embed=level(h), view = self)
+        self.user = interaction.user.display_name
 
 @client.tree.command(name="gdbrowser", description="Tìm thông tin của một level trong Geometry Dash", guilds=GUILD_ID)
 async def gdbrowser(interaction: discord.Interaction, query: str):
