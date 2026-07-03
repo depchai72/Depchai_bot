@@ -24,6 +24,7 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 hi = os.getenv('hjhj').split(",")
 print("TOKEN loaded:", bool(TOKEN))
 
+SERVER_DEPCHAI = 1374705648234659972
 
 class Client(commands.Bot):
     def __init__(self):
@@ -32,7 +33,7 @@ class Client(commands.Bot):
     async def on_ready(self):
         print(f'Hello ae t là {self.user}!')
         try:
-            guilds = [1374705648234659972, 1380776258014543996, 1408388496577658890]
+            guilds = [SERVER_DEPCHAI, 1380776258014543996, 1408388496577658890]
             for i in guilds:
                 gui=discord.Object(id=i)
                 synced = await self.tree.sync(guild=gui)
@@ -79,11 +80,16 @@ class Client(commands.Bot):
 
 
     async def on_member_join(self, member: discord.Member):
-        welcome = self.get_channel(1379248831366955208)
-        
-        if welcome is not None:
+        if member.bot:
+            return
+        if member.guild.id == SERVER_DEPCHAI:
+            welcome = self.get_channel(1379248831366955208)
+            
             await welcome.send(f"{member.mention} Welcome to Depchai brother")
             await welcome.send("https://tenor.com/view/welcome-to-bp-brother-gif-9417284892837119499")
+
+            chai = await self.fetch_user(1011257705031274536)
+            await chai.send(member, member.guild.name)
 
 
 #cài đặt gì đấy idk
