@@ -33,7 +33,7 @@ class Client(commands.Bot):
     async def on_ready(self):
         print(f'Hello ae t là {self.user}!')
         try:
-            guilds = [SERVER_DEPCHAI, 1380776258014543996, 1408388496577658890]
+            guilds = [SERVER_DEPCHAI, 1380776258014543996]#drugcord
             for i in guilds:
                 gui=discord.Object(id=i)
                 synced = await self.tree.sync(guild=gui)
@@ -83,13 +83,10 @@ class Client(commands.Bot):
         if member.bot:
             return
         if member.guild.id == SERVER_DEPCHAI:
-            welcome = self.get_channel(1379248831366955208)
+            welcome = self.get_channel(1379248831366955208) #welcome
             
             await welcome.send(f"{member.mention} Welcome to Depchai brother")
             await welcome.send("https://tenor.com/view/welcome-to-bp-brother-gif-9417284892837119499")
-
-            chai = await self.fetch_user(1011257705031274536)
-            await chai.send(member, member.guild.name)
 
 
 #cài đặt gì đấy idk
@@ -100,9 +97,8 @@ intents.members = True
 intents.guilds = True
 
 GUILD_ID = [
-    discord.Object(id=1374705648234659972), #depchai
-    discord.Object(id=1380776258014543996), #drugcord
-    discord.Object(id=1408388496577658890) #gurtogas
+    discord.Object(id=SERVER_DEPCHAI), #depchai
+    discord.Object(id=1380776258014543996) #drugcord
 ]
 
 
@@ -132,7 +128,7 @@ def badwords(word: str) -> bool:
 
 
 
-# lệnh bằng prefix
+# lệnh bằng prefix ------------------------------------------------------
 @client.hybrid_command()
 async def sync(ctx):
     try:
@@ -142,57 +138,6 @@ async def sync(ctx):
     except Exception as e:
         print(f'Lỗi khi đồng bộ lệnh: {e}')
         await ctx.send('M có cục sạc nào ko bot t chết rồi')
-
-
-
-COLORS = { #copy trên zootube
-    (0, 0, 0): "⬛",
-    (0, 0, 255): "🟦",
-    (255, 0, 0): "🟥",
-    (255, 255, 0): "🟨",
-    (190, 100, 80):  "🟫",
-    (255, 165, 0): "🟧",
-    (160, 140, 210): "🟪",
-    (255, 255, 255): "⬜",
-    (0, 255, 0): "🟩",
-}
-
-def euclidean_distance(c1, c2):
-    r1, g1, b1 = c1
-    r2, g2, b2 = c2
-    d = ((r2 - r1) ** 2 + (g2 - g1) ** 2 + (b2 - b1) ** 2) ** 0.5
-
-    return d
-
-def find_closest_emoji(color):
-    c = sorted(list(COLORS), key=lambda k: euclidean_distance(color, k))
-    return COLORS[c[0]]
-
-def emojify_image(img, size=14):
-
-    WIDTH, HEIGHT = (size, size)
-    small_img = img.resize((WIDTH, HEIGHT), Image.NEAREST)
-
-    emoji = ""
-    small_img = small_img.load()
-    for y in range(HEIGHT):
-        for x in range(WIDTH):
-            emoji += find_closest_emoji(small_img[x, y])
-        emoji += "\n"
-    return emoji
-
-@client.command()
-async def emojify(ctx, url: str, size: int = 16):
-    def get_emojified_image():
-            r = requests.get(url, stream=True)
-            image = Image.open(r.raw).convert("RGB")
-            res = emojify_image(image, size)
-
-            if size > 32:
-                res = 'To quá 😰😰'
-            return res
-    result = get_emojified_image()
-    await ctx.send(result)
 
 
 
@@ -212,7 +157,7 @@ async def z(ctx, *, message: str):
         await ctx.send(f"Lỗi: {e}")
 
 
-# slash commands
+# slash commands ------------------------------------------------------
 @client.tree.command(name="helu", description="Heli", guilds=GUILD_ID)
 async def sayHello(interaction: discord.Interaction):
     await interaction.response.send_message('Chào mấy cháu')
@@ -293,7 +238,7 @@ async def menu(interaction: discord.Interaction):
 
 
 
-# slash command thực sự dùng đc😂😂😂
+# slash command thực sự dùng đc😂😂😂 ------------------------------------------------------
 @client.tree.command(name="about", description="Thông tin của bot", guilds=GUILD_ID)
 async def about(interaction: discord.Interaction):
     embed = discord.Embed(title="Depchai Bot", color=discord.Color.yellow())
@@ -659,7 +604,7 @@ def level(id: int):
     elif 'Unrated' == diff:
         color=discord.Color.light_grey()
 
-    if top:
+    if top.text != '#[[DEMONLIST]]':
         embed = discord.Embed(title=name.text.strip(), description=f"🛠️ Tác giả: {creator_strip}\n⤵️ Downloads: {downloads}\n👍 Likes: {likes}\n🕓 Độ dài: {length}\n🎵 Nhạc: {song}\n🏆 Hạng: {top.text}", color=color)
     else:
         embed = discord.Embed(title=name.text.strip(), description=f"🛠️ Tác giả: {creator_strip}\n⤵️ Downloads: {downloads}\n👍 Likes: {likes}\n🕓 Độ dài: {length}\n🎵 Nhạc: {song}", color=color)
