@@ -24,6 +24,7 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 hi = os.getenv('hjhj').split(",")
 print("TOKEN loaded:", bool(TOKEN))
 
+DEPCHAI = 1011257705031274536
 SERVER_DEPCHAI = 1374705648234659972
 
 class Client(commands.Bot):
@@ -33,7 +34,7 @@ class Client(commands.Bot):
     async def on_ready(self):
         print(f'Hello ae t là {self.user}!')
         try:
-            guilds = [SERVER_DEPCHAI, 1380776258014543996]#drugcord
+            guilds = [SERVER_DEPCHAI, 1380776258014543996, 1525898626302214224]#drugcord, server thg hoang
             for i in guilds:
                 gui=discord.Object(id=i)
                 synced = await self.tree.sync(guild=gui)
@@ -53,7 +54,7 @@ class Client(commands.Bot):
                 await message.add_reaction('🇭')
                 await message.add_reaction('🇮')
         if 'depchai ngu' in message.content.lower():
-            await message.channel.send(f'Watch yo tung tung TOUNGE sahur <@{message.author.id}>🙏🏿')
+            await message.channel.send(f'Watch yo tung tung TONGUE sahur <@{message.author.id}>🙏🏿')
         if message.content.lower() == 'jigsaw':
             await message.channel.send('Yo final challenge: let you bih go through yo phone!!!!')
             await message.channel.send('Oh hell na yo ás tweakin jigsaw😰😰')
@@ -98,7 +99,8 @@ intents.guilds = True
 
 GUILD_ID = [
     discord.Object(id=SERVER_DEPCHAI), #depchai
-    discord.Object(id=1380776258014543996) #drugcord
+    discord.Object(id=1380776258014543996), #drugcord
+    discord.Object(id=1525898626302214224) #server thg hoang
 ]
 
 
@@ -111,8 +113,8 @@ allowed = discord.AllowedMentions(
 )
 
 # function lọc từ cấm
-tu_cam = ["nigga", "nigger", "penis", "hitler", "horny", "dildo", "pussy", "fuck", "dick", "bitch", "nude", "fatass", "porn", "boob", "cunt", "cumming", "asshole", "sperm", "cocaine", "cumshot", "nứng", "chịch", "buồi", "điếm", "cặc", "lồn", "parky", "namki", "trungki", 'tinh dịch', 'ấu dâm', 'hiếp dâm', 'thủ dâm', 'chó đẻ', 'ma túy', 'thuốc lắc', 'bắc kì', 'nam kì', 'trung kì', 'tinh trùng', 'bú vú', 'bú cu', 'cần sa']
-tu_cam_rieng = ['đĩ', 'đỉ', 'đụ', 'dái', 'địt', 'iồn', 'anal', 'cum', 'ass', 'sex', 'sexual', 'cock', 'rape']
+tu_cam = ["nigga", "nigger", "penis", "hitler", "horny", "dildo", "pussy", "dick", "bitch", "nude", "fatass", "porn", "boob", "cunt", "cumming", "asshole", "sperm", "cocaine", "cumshot", "nứng", "chịch", "buồi", "điếm", "cặc", "lồn", "parky", "namki", "trungki", 'tinh dịch', 'ấu dâm', 'hiếp dâm', 'thủ dâm', 'chó đẻ', 'ma túy', 'thuốc lắc', 'bắc kì', 'nam kì', 'trung kì', 'tinh trùng', 'bú vú', 'bú cu', 'cần sa']
+tu_cam_rieng = ['đĩ', 'đỉ', 'đụ', 'dái', 'địt', 'iồn', 'anal', 'cum', 'sex', 'cock', 'rape']
 
 def badwords(word: str) -> bool:
     text = word.lower()
@@ -131,13 +133,15 @@ def badwords(word: str) -> bool:
 # lệnh bằng prefix ------------------------------------------------------
 @client.hybrid_command()
 async def sync(ctx):
+    if ctx.user.id != DEPCHAI:
+        return
     try:
         synced = await client.tree.sync(guild=ctx.guild)
         await ctx.send(f'Đã động bộ {len(synced)} lệnh vào {ctx.guild}')
 
     except Exception as e:
         print(f'Lỗi khi đồng bộ lệnh: {e}')
-        await ctx.send('M có cục sạc nào ko bot t chết rồi')
+        await ctx.send('cak')
 
 
 
@@ -243,7 +247,7 @@ async def menu(interaction: discord.Interaction):
 async def about(interaction: discord.Interaction):
     embed = discord.Embed(title="Depchai Bot", color=discord.Color.yellow())
     embed.set_thumbnail(url="https://media.discordapp.net/attachments/1054347353898897428/1462415303756742811/image.png?ex=698139a2&is=697fe822&hm=b4ae7abb22f9550af5c440452cc1226f4707ba8747c8bddab8e5cafafe1bb08d&=&format=webp&quality=lossless&width=438&height=438")
-    embed.add_field(name="Developer", value="<@1011257705031274536> (Owner + lead developer)\n<@1372581695328620594>", inline=False)
+    embed.add_field(name="Developer", value=f"<@{DEPCHAI}> (Owner + lead developer)\n<@1372581695328620594>", inline=False)
     embed.add_field(name="Giới thiệu", value="Bot Discord được tạo bởi Depchai và được giúp từ Random Person\nBot chủ yếu để vui, giải trí xàm", inline=False)
     embed.add_field(name="Web scrape", value="Web mà bot đã scrape thông tin:\nhttps://tiktok.com\nhttps://gdbrowser.com\nhttps://dictionary.cambridge.org\nhttp://tratu.soha.vn/dict/vn_vn\nhttps://www.nytimes.com\nhttps://flagcdn.com\n", inline=False)    
     embed.set_footer(text='Depchai')
@@ -861,7 +865,6 @@ async def tictac_mp4(interaction: discord.Interaction, link: str):
 
 
 
-DEPCHAI = 1011257705031274536
 @client.tree.command(name='feedback', description="Gửi góp ý đến depchai", guilds=GUILD_ID)
 async def feedback(interaction: discord.Interaction, message: str):
     await interaction.response.send_message("<a:acn_tickden:1413824083413696652> Gửi góp ý thành công")
