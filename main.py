@@ -133,7 +133,7 @@ def badwords(word: str) -> bool:
 # lệnh bằng prefix ------------------------------------------------------
 @client.hybrid_command()
 async def sync(ctx):
-    if ctx.user.id != DEPCHAI:
+    if ctx.author.id != DEPCHAI:
         return
     try:
         synced = await client.tree.sync(guild=ctx.guild)
@@ -552,7 +552,7 @@ def to_tieqviet(text: str) -> str:
             i += 1
     return result
 
-@client.tree.command(name="tieq_viet", description="Chuyển đổi Tiếng Việt truyền thống sang Tiếq Việt")
+@client.tree.command(name="tieq_viet", description="Chuyển đổi Tiếng Việt truyền thống sang Tiếq Việt", guilds=GUILD_ID)
 async def tieqviet(interaction: discord.Interaction, text: str):
     if badwords(text):
         await interaction.response.send_message('nuh uh<:ruachemieng:1440560108676321320>', ephemeral=True)
