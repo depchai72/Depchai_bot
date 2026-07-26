@@ -1008,7 +1008,6 @@ async def flag(interaction: discord.Interaction, difficulty: app_commands.Choice
     wrong = 0
     i = 0
     for i in range(5):
-        print(difficulty.value)
         if difficulty.value == "easy":
             code, ans = random.choice(list(ez.items()))
         elif difficulty.value == "medium":
@@ -1026,8 +1025,8 @@ async def flag(interaction: discord.Interaction, difficulty: app_commands.Choice
             await interaction.channel.send('Đây là cờ nước gì?', file=discord.File(flag_img, filename='flag.png'))            
         msg = await client.wait_for("message", timeout=None, check=check)
 
-        if any(msg.content.lower() == h.lower() for h in ans):
-            await interaction.channel.send('Chính xác <a:a_tickvang:1422566122305097830>')
+        if any(msg.content.lower() == h.lower() for h in ans) or msg.content.lower() == ans.lower():
+            await interaction.channel.send('Chính xác <a:a_tickvang:1422566122305097830>') 
             correct += 1
 
         elif any(msg.content.lower() == option for option in ['sotp', 'chịu', 'cút', 'mẹ mày']):
