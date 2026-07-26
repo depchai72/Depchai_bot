@@ -780,57 +780,260 @@ async def wordle(interaction: discord.Interaction):
 
 
 @client.tree.command(name="guess_that_flag", description="Đoán lá cờ", guilds=GUILD_ID)
-async def flag(interaction: discord.Interaction):
+@app_commands.describe(difficulty="Độ khó")
+@app_commands.choices(
+    difficulty=[
+        app_commands.Choice(name="Dễ", value="easy"),
+        app_commands.Choice(name="Trung bình", value="medium"),
+        app_commands.Choice(name="Khó", value="hard")
+    ])
+
+async def flag(interaction: discord.Interaction, difficulty: app_commands.Choice[str]):
     await interaction.response.defer(thinking=True)
-    countries = {
-    'vn': 'Vietnam', 
-    'ad': 'Andorra', 
-    'ae': 'United Arab Emirates', 
-    'af': 'Afghanistan', 
-    'ag': 'Antigua and Barbuda', 
-    'al': 'Albania', 
-    'am': 'Armenia', 
-    'ao': 'Angola', 
-    'ar': 'Argentina', 
-    'at': 'Austria', 
-    'au': 'Australia', 
-    'az': 'Azerbaijan', 
-    'ba': 'Bosnia and Herzegovina', 
-    'bb': 'Barbados', 
-    'bd': 'Bangladesh', 
-    'be': 'Belgium', 
-    'bf': 'Burkina Faso', 
-    'bg': 'Bulgaria', 
-    'bh': 'Bahrain', 
-    'bi': 'Burundi', 
-    'bj': 'Benin', 
-    'bn': 'Brunei', #mọe dài quá del sửa hết đc
-    'bo': 'Bolivia', 'br': 'Brazil', 'bs': 'Bahamas', 'bt': 'Bhutan', 'bw': 'Botswana', 'by': 'Belarus', 'bz': 'Belize', 'ca': 'Canada', 'cd': 'DR Congo', 'cf': 'Central African Republic', 'cg': 'Republic of the Congo', 'ch': 'Switzerland', 'ci': "Côte d'Ivoire (Ivory Coast)", 'cl': 'Chile', 'cm': 'Cameroon', 'cn': 'China', 'co': 'Colombia', 'cr': 'Costa Rica', 'cu': 'Cuba', 'cv': 'Cape Verde', 'cy': 'Cyprus', 'cz': 'Czechia', 'de': 'Germany', 'dj': 'Djibouti', 'dk': 'Denmark', 'dm': 'Dominica', 'do': 'Dominican Republic', 'dz': 'Algeria', 'ec': 'Ecuador', 'ee': 'Estonia', 'eg': 'Egypt', 'er': 'Eritrea', 'es': 'Spain', 'et': 'Ethiopia', 'fi': 'Finland', 'fj': 'Fiji', 'fm': 'Micronesia', 'fr': 'France', 'ga': 'Gabon', 'gb': 'United Kingdom', 'gd': 'Grenada', 'ge': 'Georgia', 'gh': 'Ghana', 'gl': 'Greenland', 'gm': 'Gambia', 'gn': 'Guinea', 'gq': 'Equatorial Guinea', 'gr': 'Greece', 'gt': 'Guatemala', 'gw': 'Guinea-Bissau', 'gy': 'Guyana', 'hk': 'Hong Kong', 'hn': 'Honduras', 'hr': 'Croatia', 'ht': 'Haiti', 'hu': 'Hungary', 'id': 'Indonesia', 'ie': 'Ireland', 'il': 'Israel', 'in': 'India', 'iq': 'Iraq', 'ir': 'Iran', 'is': 'Iceland', 'it': 'Italy', 'jm': 'Jamaica', 'jo': 'Jordan', 'jp': 'Japan', 'ke': 'Kenya', 'kg': 'Kyrgyzstan', 'kh': 'Cambodia', 'ki': 'Kiribati', 'km': 'Comoros', 'kn': 'Saint Kitts and Nevis', 'kp': 'North Korea', 'kr': 'South Korea', 'kw': 'Kuwait', 'kz': 'Kazakhstan', 'la': 'Laos', 'lb': 'Lebanon', 'lc': 'Saint Lucia', 'li': 'Liechtenstein', 'lk': 'Sri Lanka', 'lr': 'Liberia', 'ls': 'Lesotho', 'lt': 'Lithuania', 'lu': 'Luxembourg', 'lv': 'Latvia', 'ly': 'Libya', 'ma': 'Morocco', 'mc': 'Monaco', 'md': 'Moldova', 'me': 'Montenegro', 'mf': 'Saint Martin', 'mg': 'Madagascar', 'mh': 'Marshall Islands', 'mk': 'North Macedonia', 'ml': 'Mali', 'mm': 'Myanmar', 'mn': 'Mongolia', 'mo': 'Macau', 'mr': 'Mauritania', 'mt': 'Malta', 'mu': 'Mauritius', 'mv': 'Maldives', 'mw': 'Malawi', 'mx': 'Mexico', 'my': 'Malaysia', 'mz': 'Mozambique', 'na': 'Namibia', 'ne': 'Niger', 'ng': 'Nigeria', 'ni': 'Nicaragua', 'nl': 'Netherlands', 'no': 'Norway', 'np': 'Nepal', 'nr': 'Nauru', 'nz': 'New Zealand', 'om': 'Oman', 'pa': 'Panama', 'pe': 'Peru', 'pf': 'French Polynesia', 'pg': 'Papua New Guinea', 'ph': 'Philippines', 'pk': 'Pakistan', 'pl': 'Poland', 'pm': 'Saint Pierre and Miquelon', 'pr': 'Puerto Rico', 'ps': 'Palestine', 'pt': 'Portugal', 'pw': 'Palau', 'py': 'Paraguay', 'qa': 'Qatar', 'ro': 'Romania', 'rs': 'Serbia', 'ru': 'Russia', 'rw': 'Rwanda', 'sa': 'Saudi Arabia', 'sb': 'Solomon Islands', 'sc': 'Seychelles', 'sd': 'Sudan', 'se': 'Sweden', 'sg': 'Singapore', 'si': 'Slovenia', 'sk': 'Slovakia', 'sl': 'Sierra Leone', 'sm': 'San Marino', 'sn': 'Senegal', 'so': 'Somalia', 'sr': 'Suriname', 'ss': 'South Sudan', 'st': 'São Tomé and Príncipe', 'sv': 'El Salvador', 'sy': 'Syria', 'sz': 'Eswatini', 'td': 'Chad', 'tg': 'Togo', 'th': 'Thailand', 'tj': 'Tajikistan', 'tl': 'Timor-Leste', 'tm': 'Turkmenistan', 'tn': 'Tunisia', 'to': 'Tonga', 'tr': 'Turkey', 'tt': 'Trinidad and Tobago', 'tv': 'Tuvalu', 'tw': 'Taiwan', 'tz': 'Tanzania', 'ua': 'Ukraine', 'ug': 'Uganda', 'us': 'United States', 'uy': 'Uruguay', 'uz': 'Uzbekistan', 'va': 'Vatican City', 'vc': 'Saint Vincent and the Grenadines', 've': 'Venezuela', 'vu': 'Vanuatu', 'ws': 'Samoa', 'xk': 'Kosovo', 'ye': 'Yemen', 'za': 'South Africa', 
-    'zm': 'Zambia',
-    'zw': 'Zimbabwe'
+    ez = {
+        'ae': 'United Arab Emirates',
+        'ar': 'Argentina',
+        'at': 'Austria',
+        'au': 'Australia',
+        'be': 'Belgium',
+        'br': 'Brazil',
+        'ca': 'Canada',
+        'ch': 'Switzerland',
+        'cn': 'China',
+        'cu': 'Cuba',
+        'cz': ['Czechia', 'Czech Republic'],
+        'de': 'Germany',
+        'dk': 'Denmark',
+        'eg': 'Egypt',
+        'es': 'Spain',
+        'fi': 'Finland',
+        'fr': 'France',
+        'gb': ['United Kingdom', 'UK', 'Great Britain'],
+        'gr': 'Greece',
+        'hk': 'Hong Kong',
+        'id': 'Indonesia',
+        'ie': 'Ireland',
+        'il': 'Israel',
+        'in': 'India',
+        'iq': 'Iraq',
+        'ir': 'Iran',
+        'is': 'Iceland',
+        'it': 'Italy',
+        'jm': 'Jamaica',
+        'jp': 'Japan',
+        'kh': 'Cambodia',
+        'kp': 'North Korea',
+        'kr': 'South Korea',
+        'la': 'Laos',
+        'ls': 'Lesotho',
+        'mx': 'Mexico',
+        'my': 'Malaysia',
+        'nl': ['Netherlands', 'Holland'],
+        'no': 'Norway',
+        'nz': 'New Zealand',
+        'ph': 'Philippines',
+        'pl': 'Poland',
+        'pt': 'Portugal',
+        'qa': 'Qatar',
+        'ru': 'Russia',
+        'sa': 'Saudi Arabia',
+        'se': 'Sweden',
+        'sg': 'Singapore',
+        'th': 'Thailand',
+        'tr': ['Turkey', 'Türkiye'],
+        'tw': 'Taiwan',
+        'ua': 'Ukraine',
+        'us': ['United States', 'USA', 'United States of America'],
+        'va': ['Vatican City', 'Vatican'],
+        'vn': ['Vietnam', 'Viet Nam'],
+        'za': 'South Africa',
     }
+
+    mid = {
+        'af': 'Afghanistan',
+        'al': 'Albania',
+        'ao': 'Angola',
+        'az': 'Azerbaijan',
+        'bd': 'Bangladesh',
+        'bg': 'Bulgaria',
+        'bh': 'Bahrain',
+        'bo': 'Bolivia',
+        'bs': 'Bahamas',
+        'by': 'Belarus',
+        'cl': 'Chile',
+        'co': 'Colombia',
+        'cr': 'Costa Rica',
+        'cd': ['DR Congo', 'Democratic Republic of the Congo'],
+        'dz': 'Algeria',
+        'ee': 'Estonia',
+        'et': 'Ethiopia',
+        'fj': 'Fiji',
+        'ge': 'Georgia',
+        'gh': 'Ghana',
+        'gl': 'Greenland',
+        'hr': 'Croatia',
+        'hu': 'Hungary',
+        'jo': 'Jordan',
+        'ke': 'Kenya',
+        'kz': 'Kazakhstan',
+        'lb': 'Lebanon',
+        'lk': 'Sri Lanka',
+        'lt': 'Lithuania',
+        'lu': 'Luxembourg',
+        'lv': 'Latvia',
+        'ly': 'Libya',
+        'ma': 'Morocco',
+        'mc': 'Monaco',
+        'md': 'Moldova',
+        'mg': 'Madagascar',
+        'mm': ['Myanmar', 'Burma'],
+        'mn': 'Mongolia',
+        'mo': 'Macau',
+        'mt': 'Malta',
+        'mv': 'Maldives',
+        'ng': 'Nigeria',
+        'np': 'Nepal',
+        'om': 'Oman',
+        'pa': 'Panama',
+        'pe': 'Peru',
+        'pk': 'Pakistan',
+        'pr': 'Puerto Rico',
+        'ps': 'Palestine',
+        'py': 'Paraguay',
+        'ro': 'Romania',
+        'rs': 'Serbia',
+        'sd': 'Sudan',
+        'si': 'Slovenia',
+        'sk': 'Slovakia',
+        'sn': 'Senegal',
+        'so': 'Somalia',
+        'sy': 'Syria',
+        'tn': 'Tunisia',
+        'tz': 'Tanzania',
+        'ug': 'Uganda',
+        'uy': 'Uruguay',
+        'uz': 'Uzbekistan',
+        've': 'Venezuela',
+        'ye': 'Yemen',
+        'zw': 'Zimbabwe',
+    }
+
+    hard = {
+        'ad': 'Andorra',
+        'ag': 'Antigua and Barbuda',
+        'am': 'Armenia',
+        'ba': 'Bosnia and Herzegovina',
+        'bb': 'Barbados',
+        'bf': 'Burkina Faso',
+        'bi': 'Burundi',
+        'bj': 'Benin',
+        'bn': 'Brunei',
+        'bt': 'Bhutan',
+        'bw': 'Botswana',
+        'bz': 'Belize',
+        'cf': 'Central African Republic',
+        'cg': ['Republic of the Congo', 'Congo'],
+        'ci': ["Côte d'Ivoire", 'Ivory Coast'],
+        'cm': 'Cameroon',
+        'cv': ['Cape Verde', 'Cabo Verde'],
+        'cy': 'Cyprus',
+        'dj': 'Djibouti',
+        'dm': 'Dominica',
+        'do': 'Dominican Republic',
+        'ec': 'Ecuador',
+        'er': 'Eritrea',
+        'fm': 'Micronesia',
+        'ga': 'Gabon',
+        'gd': 'Grenada',
+        'gm': 'Gambia',
+        'gn': 'Guinea',
+        'gq': 'Equatorial Guinea',
+        'gt': 'Guatemala',
+        'gw': 'Guinea-Bissau',
+        'gy': 'Guyana',
+        'hn': 'Honduras',
+        'ht': 'Haiti',
+        'kg': 'Kyrgyzstan',
+        'ki': 'Kiribati',
+        'km': 'Comoros',
+        'kn': 'Saint Kitts and Nevis',
+        'kw': 'Kuwait',
+        'lc': 'Saint Lucia',
+        'li': 'Liechtenstein',
+        'lr': 'Liberia',
+        'me': 'Montenegro',
+        'mf': 'Saint Martin',
+        'mh': 'Marshall Islands',
+        'mk': ['North Macedonia', 'Macedonia'],
+        'ml': 'Mali',
+        'mr': 'Mauritania',
+        'mu': 'Mauritius',
+        'mw': 'Malawi',
+        'mz': 'Mozambique',
+        'na': 'Namibia',
+        'ne': 'Niger',
+        'ni': 'Nicaragua',
+        'nr': 'Nauru',
+        'pf': 'French Polynesia',
+        'pg': 'Papua New Guinea',
+        'pm': 'Saint Pierre and Miquelon',
+        'pw': 'Palau',
+        'rw': 'Rwanda',
+        'sb': 'Solomon Islands',
+        'sc': 'Seychelles',
+        'sl': 'Sierra Leone',
+        'sm': 'San Marino',
+        'sr': 'Suriname',
+        'ss': 'South Sudan',
+        'st': 'São Tomé and Príncipe',
+        'sv': 'El Salvador',
+        'sz': ['Eswatini', 'Swaziland'],
+        'td': 'Chad',
+        'tg': 'Togo',
+        'tj': 'Tajikistan',
+        'tl': ['Timor-Leste', 'East Timor'],
+        'tm': 'Turkmenistan',
+        'to': 'Tonga',
+        'tt': 'Trinidad and Tobago',
+        'tv': 'Tuvalu',
+        'vc': 'Saint Vincent and the Grenadines',
+        'vu': 'Vanuatu',
+        'ws': 'Samoa',
+        'xk': 'Kosovo'
+    }
+
     def check(msg):
         return msg.author.id == interaction.user.id and msg.channel.id == interaction.channel.id
     correct = 0
     wrong = 0
     i = 0
     for i in range(5):
-        code, ans = random.choice(list(countries.items()))
+        print(difficulty.value)
+        if difficulty.value == "easy":
+            code, ans = random.choice(list(ez.items()))
+        elif difficulty.value == "medium":
+            code, ans = random.choice(list(mid.items()))
+        elif difficulty.value == "hard":
+            code, ans = random.choice(list(hard.items()))
+
         flag = f"https://flagcdn.com/w1280/{code}.png"
         r = requests.get(flag)
         flag_img = io.BytesIO(r.content)
+
         if i == 0:
-            await interaction.followup.send('Đây là cờ nước gì?', file=discord.File(flag_img, filename='flag.png'))
+            await interaction.followup.send('Đây là cờ nước gì? (Gửi tên quốc gia vào chat để trả lời)', file=discord.File(flag_img, filename='flag.png'))
         else:
             await interaction.channel.send('Đây là cờ nước gì?', file=discord.File(flag_img, filename='flag.png'))            
-
         msg = await client.wait_for("message", timeout=None, check=check)
-        if msg.content.lower().strip() == ans.lower():
+
+        if any(msg.content.lower() == h.lower() for h in ans):
             await interaction.channel.send('Chính xác <a:a_tickvang:1422566122305097830>')
             correct += 1
-        elif msg.content.lower().strip() == 'sotp' or msg.content.lower().strip() == 'chịu' or msg.content.lower().strip() == 'cút':
+
+        elif any(msg.content.lower() == option for option in ['sotp', 'chịu', 'cút', 'mẹ mày']):
             await interaction.channel.send(f'Okiiiii😁😁 đáp án là: {ans}')
             return
+        
         else:
             await interaction.channel.send(f'Sai <:cuoiteghe:1478012484202790913><:cuoiteghe:1478012484202790913><:cuoiteghe:1478012484202790913> đáp án là: {ans}')
             wrong += 1
