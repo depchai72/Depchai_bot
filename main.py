@@ -476,8 +476,11 @@ async def turtle_emoji(interaction: discord.Interaction):
                 if response.status != 404:
                     chosen_unicode = emoji_code
                     break
-                
-    await interaction.followup.send(url)
+        turt = url
+        r = requests.get(turt)
+        turtle = io.BytesIO(r.content)
+        emoji_char = chr(int(emoji_code, 16))
+    await interaction.followup.send(f'🐢 + {emoji_char} =', file=discord.File(turtle))
 
 
 
@@ -1020,7 +1023,7 @@ async def flag(interaction: discord.Interaction, difficulty: app_commands.Choice
         flag_img = io.BytesIO(r.content)
 
         if i == 0:
-            await interaction.followup.send('Đây là cờ nước gì? (Gửi tên quốc gia vào chat để trả lời)', file=discord.File(flag_img, filename='flag.png'))
+            await interaction.followup.send('Đây là cờ nước gì? (Gửi tên quốc gia bằng tiếng Anh vào chat để trả lời)', file=discord.File(flag_img, filename='flag.png'))
         else:
             await interaction.channel.send('Đây là cờ nước gì?', file=discord.File(flag_img, filename='flag.png'))            
         msg = await client.wait_for("message", timeout=None, check=check)
