@@ -34,7 +34,7 @@ class Client(commands.Bot):
     async def on_ready(self):
         print(f'Hello ae t là {self.user}!')
         try:
-            guilds = [SERVER_DEPCHAI, 1380776258014543996, 1525898626302214224]#drugcord, server thg hoang
+            guilds = [SERVER_DEPCHAI, 1380776258014543996]#drugcord
             for i in guilds:
                 gui=discord.Object(id=i)
                 synced = await self.tree.sync(guild=gui)
@@ -51,8 +51,9 @@ class Client(commands.Bot):
             if 'ban' in message.content.lower():
                 await message.channel.send(f'Something bad about to happen to me💀💀☠️☠️')
             else:
-                await message.add_reaction('🇭')
-                await message.add_reaction('🇮')
+                r = requests.get('https://media.discordapp.net/attachments/1444288512936509508/1536355225525424138/images_61.jpg?ex=6a7b19cd&is=6a79c84d&hm=141cf2d77dd003cde0b8f97f32bf45eda42aa434c705d6794decaeac28a4a4d8&=&format=webp')
+                vierty = io.BytesIO(r.content)
+                await message.channel.send(f'*Nhìn xuống bạn* Xin chào, mình là Depchai…người bạn trợ lý cá nhân của bạn! Cứ hỏi mình bất cứ điều gì… mình biết tất cả mọi thứ~ *cười khẽ và nhếch mép*', file=discord.File(vierty, filename='veirty.webp'))
         if 'depchai ngu' in message.content.lower():
             await message.channel.send(f'Watch yo tung tung TONGUE sahur <@{message.author.id}>🙏🏿')
         if message.content.lower() == 'jigsaw':
@@ -99,8 +100,7 @@ intents.guilds = True
 
 GUILD_ID = [
     discord.Object(id=SERVER_DEPCHAI), #depchai
-    discord.Object(id=1380776258014543996), #drugcord
-    discord.Object(id=1525898626302214224) #server thg hoang
+    discord.Object(id=1380776258014543996) #drugcord
 ]
 
 
