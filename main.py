@@ -480,7 +480,7 @@ async def turtle_emoji(interaction: discord.Interaction):
         r = requests.get(turt)
         turtle = io.BytesIO(r.content)
         emoji_char = chr(int(emoji_code, 16))
-    await interaction.followup.send(f'🐢 + {emoji_char} =', file=discord.File(turtle))
+    await interaction.followup.send(f'🐢 + {emoji_char} =\n', file=discord.File(turtle, filename="turtle.png"))
 
 
 
