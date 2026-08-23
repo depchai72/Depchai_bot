@@ -34,7 +34,7 @@ class Client(commands.Bot):
     async def on_ready(self):
         print(f'Hello ae t là {self.user}!')
         try:
-            guilds = [SERVER_DEPCHAI, 1380776258014543996]#drugcord
+            guilds = [SERVER_DEPCHAI, 1380776258014543996, 1522974331402059817]#drugcord, tổ chim
             for i in guilds:
                 gui=discord.Object(id=i)
                 synced = await self.tree.sync(guild=gui)
@@ -51,9 +51,9 @@ class Client(commands.Bot):
             if 'ban' in message.content.lower():
                 await message.channel.send(f'Something bad about to happen to me💀💀☠️☠️')
             else:
-                r = requests.get('https://media.discordapp.net/attachments/1444288512936509508/1536355225525424138/images_61.jpg?ex=6a7d140d&is=6a7bc28d&hm=4f198f25c6331f5c960ba81e4206764ec44f38b8a363c64d543b8bb60b2593b9&=&format=webp')
+                r = requests.get('https://media.discordapp.net/attachments/1415713394534776863/1540996330267344926/images_61.jpg?ex=6a8bfc2b&is=6a8aaaab&hm=59cbd3c8a7ff51ea9a2c24a235f567e90e58732d816b977ce873c17671a8e1e6&=&format=webp')
                 vierty = io.BytesIO(r.content)
-                await message.channel.send(f'*Nhìn xuống bạn* Xin chào, mình là Depchai…người bạn trợ lý cá nhân của bạn! Cứ hỏi mình bất cứ điều gì… mình biết tất cả mọi thứ~ *cười khẽ và nhếch mép*', file=discord.File(vierty, filename='veirty.webp'))
+                await message.channel.send('\*Nhìn xuống bạn* Xin chào, mình là Depchai…người bạn trợ lý cá nhân của bạn! Cứ hỏi mình bất cứ điều gì… mình biết tất cả mọi thứ~ \*cười khẽ và nhếch mép*', file=discord.File(vierty, filename='veirty.webp'))
         if 'depchai ngu' in message.content.lower():
             await message.channel.send(f'Watch yo tung tung TONGUE sahur <@{message.author.id}>🙏🏿')
         if message.content.lower() == 'jigsaw':
@@ -100,7 +100,8 @@ intents.guilds = True
 
 GUILD_ID = [
     discord.Object(id=SERVER_DEPCHAI), #depchai
-    discord.Object(id=1380776258014543996) #drugcord
+    discord.Object(id=1380776258014543996), #drugcord
+    discord.Object(id=1522974331402059817) #tổ chim
 ]
 
 
