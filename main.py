@@ -34,7 +34,7 @@ class Client(commands.Bot):
     async def on_ready(self):
         print(f'Hello ae t là {self.user}!')
         try:
-            guilds = [SERVER_DEPCHAI, 1380776258014543996, 1522974331402059817]#drugcord, tổ chim
+            guilds = [SERVER_DEPCHAI, 1380776258014543996, 1522974331402059817, 1540356443335692299]#drugcord, tổ chim #sv thg ceiceiki
             for i in guilds:
                 gui=discord.Object(id=i)
                 synced = await self.tree.sync(guild=gui)
@@ -51,7 +51,7 @@ class Client(commands.Bot):
             if 'ban' in message.content.lower():
                 await message.channel.send(f'Something bad about to happen to me💀💀☠️☠️')
             else:
-                r = requests.get('https://media.discordapp.net/attachments/1374705648796827671/1540999877469929472/depchaity.webp?ex=6a8bff79&is=6a8aadf9&hm=6dc0fcc782539f547017d329918b90543bd8d0dc01c6712b36da830f46cb547c&=&format=webp')
+                r = requests.get('https://media.discordapp.net/attachments/1522140298552279080/1541706838926692443/depchaity.webp?ex=6a8e91e1&is=6a8d4061&hm=3c809c2279d6f6908071c9312842306d0099f985447bfce6a7b80f01e46d7729&=&format=webp')
                 vierty = io.BytesIO(r.content)
                 await message.channel.send('\*Nhìn xuống bạn* Xin chào, mình là Depchai…người bạn trợ lý cá nhân của bạn! Cứ hỏi mình bất cứ điều gì… mình biết tất cả mọi thứ~ \*cười khẽ và nhếch mép*', file=discord.File(vierty, filename='veirty.webp'))
         if 'depchai ngu' in message.content.lower():
@@ -101,7 +101,8 @@ intents.guilds = True
 GUILD_ID = [
     discord.Object(id=SERVER_DEPCHAI), #depchai
     discord.Object(id=1380776258014543996), #drugcord
-    discord.Object(id=1522974331402059817) #tổ chim
+    discord.Object(id=1522974331402059817), #tổ chim
+    discord.Object(id=1540356443335692299) #sv thg ceiceiki
 ]
 
 
