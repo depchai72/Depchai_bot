@@ -34,7 +34,7 @@ class Client(commands.Bot):
     async def on_ready(self):
         print(f'Hello ae t là {self.user}!')
         try:
-            guilds = [SERVER_DEPCHAI, 1380776258014543996, 1522974331402059817, 1540356443335692299]#drugcord, tổ chim #sv thg ceiceiki
+            guilds = [SERVER_DEPCHAI, 1380776258014543996, 1540356443335692299]#drugcord, #sv thg ceiceiki
             for i in guilds:
                 gui=discord.Object(id=i)
                 synced = await self.tree.sync(guild=gui)
@@ -51,7 +51,7 @@ class Client(commands.Bot):
             if 'ban' in message.content.lower():
                 await message.channel.send(f'Something bad about to happen to me💀💀☠️☠️')
             else:
-                r = requests.get('https://media.discordapp.net/attachments/1522140298552279080/1541706838926692443/depchaity.webp?ex=6a8e91e1&is=6a8d4061&hm=3c809c2279d6f6908071c9312842306d0099f985447bfce6a7b80f01e46d7729&=&format=webp')
+                r = requests.get('https://i.postimg.cc/B6KBxdjk/depchaity.webp')
                 vierty = io.BytesIO(r.content)
                 await message.channel.send('\*Nhìn xuống bạn* Xin chào, mình là Depchai…người bạn trợ lý cá nhân của bạn! Cứ hỏi mình bất cứ điều gì… mình biết tất cả mọi thứ~ \*cười khẽ và nhếch mép*', file=discord.File(vierty, filename='veirty.webp'))
         if 'depchai ngu' in message.content.lower():
@@ -74,7 +74,7 @@ class Client(commands.Bot):
             await message.channel.send('https://media.discordapp.net/attachments/1374705648796827671/1518471847723663390/images_55.jpg?ex=6a3a0a9c&is=6a38b91c&hm=50263b097aaafad6365d67e556152c4840a8cb6fca7dca74e6c1c98d9c74490a&=&format=webp&width=745&height=419')
         if 'ai ghét depchai' in message.content.lower():
             await message.channel.send('https://media.discordapp.net/attachments/1374705648796827671/1454325901214093312/IMG_4474.png?ex=6950ae0a&is=694f5c8a&hm=0b18c041326f4d85758dd6d9d00a89db06b079b9dc53651656327b883022cb5e&=&format=webp&quality=lossless&width=1526&height=800')
-        if message.content.lower().startswith('thằng nào đây'):
+        if any(message.content.lower() == option for option in ['thằng nào đây', 'thg nào đây', 'thk nào đây']):
             await message.channel.send("https://media.discordapp.net/attachments/1374705648796827671/1455067797787775178/Screenshot_20251217_182230_TikTok.jpg?ex=695360fc&is=69520f7c&hm=0049013fa84da10beddffdbb13f14bcb9eaee825b610203ef1777c280a5b3b59&=&format=webp&width=1349&height=750")
         
                 
@@ -101,7 +101,6 @@ intents.guilds = True
 GUILD_ID = [
     discord.Object(id=SERVER_DEPCHAI), #depchai
     discord.Object(id=1380776258014543996), #drugcord
-    discord.Object(id=1522974331402059817), #tổ chim
     discord.Object(id=1540356443335692299) #sv thg ceiceiki
 ]
 
