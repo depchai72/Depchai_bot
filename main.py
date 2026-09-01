@@ -51,9 +51,7 @@ class Client(commands.Bot):
             if 'ban' in message.content.lower():
                 await message.channel.send(f'Something bad about to happen to me💀💀☠️☠️')
             else:
-                r = requests.get('https://i.postimg.cc/B6KBxdjk/depchaity.webp')
-                vierty = io.BytesIO(r.content)
-                await message.channel.send('\*Nhìn xuống bạn* Xin chào, mình là Depchai…người bạn trợ lý cá nhân của bạn! Cứ hỏi mình bất cứ điều gì… mình biết tất cả mọi thứ~ \*cười khẽ và nhếch mép*', file=discord.File(vierty, filename='veirty.webp'))
+                await message.add_reaction('<:veirty:1538057542717149207>')
         if 'depchai ngu' in message.content.lower():
             await message.channel.send(f'Watch yo tung tung TONGUE sahur <@{message.author.id}>🙏🏿')
         if message.content.lower() == 'jigsaw':
