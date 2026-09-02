@@ -167,8 +167,14 @@ async def ratio(ctx):
         pick = random.randint(1, 2)
         if pick == 1:
             await ctx.message.add_reaction("❤️")
+            r = requests.get("https://i.postimg.cc/qBLrXBzD/ratio-ratio-successful.png")
+            success = io.BytesIO(r.content)
+            await ctx.send(file=discord.File(success, filename="ratio-successful.png"))
         else:
             await reply.add_reaction("❤️")
+            r = requests.get("https://i.postimg.cc/wM6p8Zbb/ratio-failed.jpg")
+            failed = io.BytesIO(r.content)
+            await ctx.send(file=discord.File(failed, filename="ratio-failed.jpg"))
 
 
 
@@ -651,7 +657,9 @@ class nextlvl(discord.ui.View):
         self.user = 'h'
     @discord.ui.button(label="", style=discord.ButtonStyle.blurple, emoji='⬅️')
     async def back(self, interaction: discord.Interaction, button: discord.ui.Button):
-        if interaction.user.display_name != self.user and self.user != 'h':
+        if self.user == 'h':
+            self.user = interaction.user.display_name
+        elif interaction.user.display_name != self.user:
             await interaction.followup.send('Del phải nút của m🤫🤫', ephemeral = True)
             return
         
@@ -663,11 +671,13 @@ class nextlvl(discord.ui.View):
             return
         h = searchlvl(self.query, self.thutu)
         await interaction.message.edit(embed=level(h), view = self)
-        self.user = interaction.user.display_name
+        
 
     @discord.ui.button(label="", style=discord.ButtonStyle.blurple, emoji='➡️')
     async def next(self, interaction: discord.Interaction, button: discord.ui.Button):
-        if interaction.user.display_name != self.user and self.user != 'h':
+        if self.user == 'h':
+            self.user = interaction.user.display_name
+        elif interaction.user.display_name != self.user:
             await interaction.followup.send('Del phải nút của m🤫🤫', ephemeral = True)
             return
 
@@ -679,7 +689,6 @@ class nextlvl(discord.ui.View):
             self.thutu -= 1
             return
         await interaction.message.edit(embed=level(h), view = self)
-        self.user = interaction.user.display_name
 
 @client.tree.command(name="gdbrowser", description="Tìm thông tin của một level trong Geometry Dash", guilds=GUILD_ID)
 async def gdbrowser(interaction: discord.Interaction, query: str):
