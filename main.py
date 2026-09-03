@@ -73,7 +73,7 @@ class Client(commands.Bot):
         if any(message.content.lower() == option for option in ['thằng nào đây', 'thg nào đây', 'thk nào đây']):
             await message.channel.send("https://media.discordapp.net/attachments/1374705648796827671/1455067797787775178/Screenshot_20251217_182230_TikTok.jpg?ex=695360fc&is=69520f7c&hm=0049013fa84da10beddffdbb13f14bcb9eaee825b610203ef1777c280a5b3b59&=&format=webp&width=1349&height=750")
 
-        if any(primedc in message.content.lower() for primedc in ['prime depchai 2 tháng hè 20k fl', 'nói thật dù mình trêu depchai', 'chúa tể depchai super prime 20250', 'cầu bình an cho thí chủ depchai']):
+        if any(primedc in message.content.lower() for primedc in ['prime depchai 2 tháng hè 20k fl', 'nói thật dù mình trêu depchai', 'chúa tể depchai super prime 2025', 'cầu bình an cho thí chủ depchai', 'xả xui cực mạnh cho depchai', 'chúng m ơi, dù t kh biết chắc chắn Depchai có về đợt trao giải ở HN không']):
             await message.delete()
 
                 
