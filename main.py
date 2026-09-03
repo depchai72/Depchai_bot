@@ -70,11 +70,12 @@ class Client(commands.Bot):
 
         if 'ai ghét depchai' in message.content.lower():
             await message.channel.send('https://media.discordapp.net/attachments/1374705648796827671/1454325901214093312/IMG_4474.png?ex=6950ae0a&is=694f5c8a&hm=0b18c041326f4d85758dd6d9d00a89db06b079b9dc53651656327b883022cb5e&=&format=webp&quality=lossless&width=1526&height=800')
-        if any(primedc in message.content.lower() for primedc in ['prime depchai 2 tháng hè 20k fl', 'nói thật dù mình trêu depchai', 'chúa tể depchai super prime 2025']):
-            await message.channel.send('https://media.discordapp.net/attachments/1374705648796827671/1543266935767044169/Screenshot_2026-08-17-01-18-05-173_com.android.chrome.jpg?ex=6a98dc16&is=6a978a96&hm=4dd24ca1cf49f9980880b52bbe5279955c306190f1432de0f49f09ebfbea7f6d&=&format=webp&width=640&height=289')
         if any(message.content.lower() == option for option in ['thằng nào đây', 'thg nào đây', 'thk nào đây']):
             await message.channel.send("https://media.discordapp.net/attachments/1374705648796827671/1455067797787775178/Screenshot_20251217_182230_TikTok.jpg?ex=695360fc&is=69520f7c&hm=0049013fa84da10beddffdbb13f14bcb9eaee825b610203ef1777c280a5b3b59&=&format=webp&width=1349&height=750")
-        
+
+        if any(primedc in message.content.lower() for primedc in ['prime depchai 2 tháng hè 20k fl', 'nói thật dù mình trêu depchai', 'chúa tể depchai super prime 20250', 'cầu bình an cho thí chủ depchai']):
+            await message.delete()
+
                 
         await self.process_commands(message)
 
