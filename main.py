@@ -34,7 +34,7 @@ class Client(commands.Bot):
     async def on_ready(self):
         print(f'Hello ae t là {self.user}!')
         try:
-            guilds = [SERVER_DEPCHAI, 1380776258014543996, 1540356443335692299]#drugcord, #sv thg ceiceiki
+            guilds = [SERVER_DEPCHAI]#drugcord1380776258014543996, #sv thg ceiceiki1540356443335692299
             for i in guilds:
                 gui=discord.Object(id=i)
                 synced = await self.tree.sync(guild=gui)
@@ -73,7 +73,7 @@ class Client(commands.Bot):
         if any(message.content.lower() == option for option in ['thằng nào đây', 'thg nào đây', 'thk nào đây']):
             await message.channel.send("https://media.discordapp.net/attachments/1374705648796827671/1455067797787775178/Screenshot_20251217_182230_TikTok.jpg?ex=695360fc&is=69520f7c&hm=0049013fa84da10beddffdbb13f14bcb9eaee825b610203ef1777c280a5b3b59&=&format=webp&width=1349&height=750")
 
-        if any(primedc in message.content.lower() for primedc in ['prime depchai 2 tháng hè 20k fl', 'nói thật dù mình trêu depchai', 'chúa tể depchai super prime 2025', 'cầu bình an cho thí chủ depchai', 'xả xui cực mạnh cho depchai', 'chúng m ơi, dù t kh biết chắc chắn Depchai có về đợt trao giải ở HN không']):
+        if any(primedc in message.content.lower() for primedc in ['prime depchai 2 tháng hè 20k fl', 'nói thật dù mình trêu depchai', 'chúa tể depchai super prime 2025', 'cầu bình an cho thí chủ depchai', 'xả xui cực mạnh cho depchai', 'chúng m ơi, dù t kh biết chắc chắn depchai có về đợt trao giải ở hn không']):
             await message.delete()
 
                 
@@ -469,11 +469,11 @@ async def death(interaction: discord.Interaction, ngay_sinh: int, thang_sinh: in
 
 # https://www.gstatic.com/android/keyboard/emojikitchen/20201001/u1f923/u1f923_u1f422.png
 emoji_ranges = [
-    (0x1F600, 0x1F64F),  # Mặt cảm xúc
-    (0x1F300, 0x1F5FF),  # Biểu tượng, thiên nhiên
-    (0x1F680, 0x1F6FF),  # Giao thông
-    (0x1F900, 0x1F9FF),  # Cử chỉ, đồ vật
-    (0x1FA70, 0x1FAFF),  # Biểu tượng mở rộng
+    (0x1F600, 0x1F64F),  
+    (0x1F300, 0x1F5FF),  
+    (0x1F680, 0x1F6FF),  
+    (0x1F900, 0x1F9FF),  
+    (0x1FA70, 0x1FAFF),  
     (0x1F300, 0x1F5FF),
 ]
 
@@ -486,15 +486,26 @@ async def turtle_emoji(interaction: discord.Interaction):
     chosen_unicode = None
 
     async with aiohttp.ClientSession() as session:
-        date = random.choice(["20201001", "20210218", "20230803", "20211115", "20210831", "20230127", "20250430", "20241021", "20250731", "20260128", "20240206", "20240530", "20260202", "20231113", "20241023", "20250130", "20220406", "20230126", "20231128", "20230821", "20230301", "20230216"])
-        while (6 < 7):  
+        #pick random emoji cho den khi no ra link valid
+        while (2 < 71):  
+            #pick random emoji
             start, end = random.choice(emoji_ranges)
             emoji_code = hex(random.randint(start, end))[2:]
-            url = f"https://www.gstatic.com/android/keyboard/emojikitchen/{date}/u{emoji_code}/u{emoji_code}_u{turtle_unicode}.png"
-            async with session.get(url) as response:
-                if response.status != 404:
-                    chosen_unicode = emoji_code
-                    break
+
+            date = ["20201001", "20210218", "20230803", "20211115", "20210831", "20230127", "20250430", "20241021", "20250731", "20260128", "20240206", "20240530", "20260202", "20231113", "20241023", "20250130", "20220406", "20230126", "20231128", "20230821", "20230301", "20230216"]
+            #cycle qua cac ngay neu ko co link valid thi tim emoji moi
+            for i in date:
+                url = f"https://www.gstatic.com/android/keyboard/emojikitchen/{i}/u{emoji_code}/u{emoji_code}_u{turtle_unicode}.png"
+                async with session.get(url) as response:
+                    if response.status != 404:
+                        chosen_unicode = emoji_code
+                        break
+            if chosen_unicode == None:
+                continue
+            else:
+                break
+
+        #download anh va gui
         turt = url
         r = requests.get(turt)
         turtle = io.BytesIO(r.content)
@@ -585,6 +596,7 @@ async def tieqviet(interaction: discord.Interaction, text: str):
 
 
 def level(id: int): 
+    #requests
     level = requests.get(f"https://gdbrowser.com/{id}")
     soup = BeautifulSoup(level.text, "html.parser")
     name = soup.find("span", attrs={"class":"pre"})
@@ -598,11 +610,11 @@ def level(id: int):
     if soup.find('h1', attrs={'class': 'smaller inline demonList'}):
         top = soup.find('h1', attrs={'class': 'smaller inline demonList'})
 
+    #downloads likes length icon nhac
     values = []
     for tag in chiso:
         text = tag.text
         values.append(text)
-
     downloads = values[0]
     likes = values[1]
     length = values[2]
@@ -610,26 +622,16 @@ def level(id: int):
     creator_strip = creator.text.replace("By ","")
     song = f'{songname.text} {songauthor.text}'
 
-    diff = img["title"]
-    if 'Extreme Demon' == diff or 'Insane Demon' == diff or 'Hard Demon' == diff:
-        color=discord.Color.dark_red()
-    elif 'Medium Demon' == diff:
-        color=discord.Color.purple()
-    elif 'Easy Demon' == diff:
-        color=discord.Color.dark_purple()
-    elif 'Insane' == diff:
-        color=discord.Color.pink()
-    elif 'Harder' == diff:
-        color=discord.Color.red()
-    elif 'Hard' == diff:
-        color=discord.Color.gold()
-    elif 'Normal' == diff:
-        color=discord.Color.green()
-    elif 'Easy' == diff:
-        color=discord.Color.blue()
-    elif 'Unrated' == diff:
-        color=discord.Color.light_grey()
+    #lay mau trung binh cua thumbnail lam mau cua embed
+    r = requests.get('https://levelthumbs.prevter.me/thumbnail/' + str(id))
+    thumb = io.BytesIO(r.content)
+    avg = Image.open(thumb).convert('RGB')
+    single_pixel = avg.resize((1, 1))
+    rgb = single_pixel.getpixel((0, 0))
+    color = discord.Color.from_rgb(*rgb)
 
+
+    #embed
     if top.text != '#[[DEMONLIST]]':
         embed = discord.Embed(title=name.text.strip(), description=f"🛠️ Tác giả: {creator_strip}\n⤵️ Downloads: {downloads}\n👍 Likes: {likes}\n🕓 Độ dài: {length}\n🎵 Nhạc: {song}\n🏆 Hạng: {top.text}", color=color)
     else:
@@ -640,6 +642,7 @@ def level(id: int):
     embed.set_footer(text = f"ID: {id}")
     return embed
 
+#search level
 def searchlvl(query:str, count: int):
     search = requests.get(f"https://gdbrowser.com/api/search/{query.replace(" ", "%20")}")
     data = search.json()
@@ -650,6 +653,7 @@ def searchlvl(query:str, count: int):
     id = data[count]["id"]
     return id
 
+#nut xem level tiep theo
 class nextlvl(discord.ui.View):
     def __init__(self, query: str, thutu: int):
         super().__init__()
