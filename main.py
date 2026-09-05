@@ -49,7 +49,9 @@ class Client(commands.Bot):
             return
         if self.user in message.mentions:
             if 'ban' in message.content.lower():
-                await message.channel.send(f'Something bad about to happen to me💀💀☠️☠️')
+                r = requests.get("https://i.postimg.cc/MHhDRyyP/5b2df110ccbc29f6ec050145d985c9e8.jpg")
+                ronaldo = io.BytesIO(r.content)
+                await message.channel.send(f'Cốc cốc... <@{message.author.id}>...😈🔪 Tôi biết cậu đang trốn ở đâu rồi đấy bạn ơi...😈🔪 Là tôi, Depchai Bot, mở cửa đi...🚪 Tôi chỉ muốn chơi một chút thôi😈🔪', file=discord.File(ronaldo, filename='ronaldo.jpg'))
             else:
                 await message.add_reaction('<:veirty:1538057542717149207>')
         if 'depchai ngu' in message.content.lower():
@@ -624,7 +626,11 @@ def level(id: int):
 
     #lay mau trung binh cua thumbnail lam mau cua embed
     r = requests.get('https://levelthumbs.prevter.me/thumbnail/' + str(id))
-    thumb = io.BytesIO(r.content)
+    #neu ko co thumbnail thi lay mau cua icon
+    if r.status_code != 200:
+        r = requests.get(icon)
+
+    thumb = io.BytesIO(r.content)    
     avg = Image.open(thumb).convert('RGB')
     single_pixel = avg.resize((1, 1))
     rgb = single_pixel.getpixel((0, 0))
@@ -1030,9 +1036,10 @@ async def flag(interaction: discord.Interaction, difficulty: app_commands.Choice
         'ws': 'Samoa',
         'xk': 'Kosovo'
     }
-
+    #check tin nhan
     def check(msg):
         return msg.author.id == interaction.user.id and msg.channel.id == interaction.channel.id
+    
     correct = 0
     wrong = 0
     i = 0
@@ -1044,6 +1051,7 @@ async def flag(interaction: discord.Interaction, difficulty: app_commands.Choice
         elif difficulty.value == "hard":
             code, ans = random.choice(list(hard.items()))
 
+        #lay la co
         flag = f"https://flagcdn.com/w1280/{code}.png"
         r = requests.get(flag)
         flag_img = io.BytesIO(r.content)
